@@ -34,12 +34,12 @@ const schema = new Schema(
     userData: {
       type: Object,
       default: {
-        age: "0",
-        height: "0",
-        currentWeight: "0",
-        desiredWeight: "0",
-        bloodType: "1",
-        calories: "0",
+        age: "",
+        height: "",
+        currentWeight: "",
+        desiredWeight: "",
+        bloodType: "",
+        calories: "",
       },
     },
     notAllowedProducts: {
