@@ -8,9 +8,8 @@ const registerUser = async (req, res, next) => {
     const user = await authService.registerUser(req.body);
     await emailService.sendEmail(user.email, user.verificationToken);
     res.status(201).json({
-      name: user.name,
-      email: user.email,
-      id: user._id,
+      code: 201,
+      user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (e) {
     next(e);
