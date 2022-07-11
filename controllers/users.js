@@ -82,7 +82,9 @@ const logoutUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const data = await authService.authenticateUser(req.user.token);
+
     res.status(200).json({
+      id: data._id,
       name: data.name,
       email: data.email,
       verify: data.verify,
