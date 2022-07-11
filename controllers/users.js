@@ -8,9 +8,8 @@ const registerUser = async (req, res, next) => {
     const user = await authService.registerUser(req.body);
     await emailService.sendEmail(user.email, user.verificationToken);
     res.status(201).json({
-      name: user.name,
-      email: user.email,
-      id: user._id,
+      code: 201,
+      user: { id: user._id, name: user.name, email: user.email },
     });
   } catch (e) {
     next(e);
@@ -82,7 +81,9 @@ const logoutUser = async (req, res, next) => {
 const getUser = async (req, res, next) => {
   try {
     const data = await authService.authenticateUser(req.user.token);
+
     res.status(200).json({
+      id: data._id,
       name: data.name,
       email: data.email,
       verify: data.verify,
