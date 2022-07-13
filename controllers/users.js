@@ -59,7 +59,7 @@ const resend = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const token = await authService.loginUser(req.body);
-    console.log(token);
+    
     res.json({
       code: 200,
       data: token,
