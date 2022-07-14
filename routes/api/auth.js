@@ -4,8 +4,6 @@ const {
   loginUser,
   logoutUser,
   getUser,
-  // confirm,
-  // resend,
 } = require("../../controllers/users");
 const router = express.Router();
 const {

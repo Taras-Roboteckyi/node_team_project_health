@@ -8,12 +8,14 @@ const dailyRateNotAllowProducts = async (req, res, next) => {
     if (error) {
       throw createError(400, error.message);
     }
-    const bloodType = req.body;
-    console.log(req.body);
+    const { bloodType } = req.params;
     const notAllowedProducts = await Product.find(
-      { ["groupBloodNotAllowed" + bloodType]: { $eq: true } },
+      { ["groupBloodNotAllowed." + bloodType]: { $eq: true } },
       "-__v ",
-      { limit: 20, sort: { calories: -1 } }
+      {
+        limit: 10,
+        sort: { calories: -1 },
+      }
     );
     if (!notAllowedProducts) {
       throw createError(404, "Not found");
