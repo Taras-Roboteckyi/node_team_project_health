@@ -31,15 +31,15 @@ const schema = new Schema(
         return v4();
       },
     },
-    userData: {
+    inputUserData: {
       type: Object,
       default: {
-        age: "",
-        height: "",
-        currentWeight: "",
-        desiredWeight: "",
-        bloodType: "",
-        calories: "",
+        height: "0",
+        age: "0",
+        currentWeight: "0",
+        desiredWeight: "0",
+        bloodType: "1",
+        calories: "0",
       },
     },
     notAllowedProducts: {

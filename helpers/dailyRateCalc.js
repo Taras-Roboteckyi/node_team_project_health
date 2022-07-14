@@ -11,11 +11,10 @@ const dailyRateCalc = ({
       161 -
       10 * (currentWeight - desiredWeight)
   );
-
   return result;
 };
 
 module.exports = dailyRateCalc;
-// dailyRateCalc(176, 35, 80, 78);
+
 // "ФОРМУЛА ДЛЯ РОЗРАХУНКУ ДЕННОЇ НОРМИ КАЛОРІЙ ЖІНКАМ
 // 10 * вага + 6.25 * зріст - 5 * вік - 161 - 10 * (вага - бажана вага)"

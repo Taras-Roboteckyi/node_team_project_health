@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const { searchProducts } = require("../../controllers/products");
-// const { dailyRate } = require("../../controllers/dailyRate");
+const { dailyRateNotAllowProducts } = require("../../controllers/dailyRate");
 
 router.get("/search/:query", searchProducts);
-router.get("/public/");
+router.get("/public/:bloodType", dailyRateNotAllowProducts);
 
 module.exports = router;
