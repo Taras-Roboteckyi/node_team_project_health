@@ -1,4 +1,9 @@
-const dailyRateCalc = ({ height = 0, age = 0, currentWeight = 0, desiredWeight = 0 }) => {
+const dailyRateCalc = ({
+  height = 0,
+  age = 0,
+  currentWeight = 0,
+  desiredWeight = 0,
+}) => {
   const result = Math.floor(
     10 * currentWeight +
       6.25 * height -
@@ -9,8 +14,8 @@ const dailyRateCalc = ({ height = 0, age = 0, currentWeight = 0, desiredWeight =
 
   return result;
 };
-// dailyRateCalc(176, 35, 80, 78);
-module.exports = dailyRateCalc;
 
+module.exports = dailyRateCalc;
+// dailyRateCalc(176, 35, 80, 78);
 // "ФОРМУЛА ДЛЯ РОЗРАХУНКУ ДЕННОЇ НОРМИ КАЛОРІЙ ЖІНКАМ
 // 10 * вага + 6.25 * зріст - 5 * вік - 161 - 10 * (вага - бажана вага)"
