@@ -22,8 +22,9 @@ const dailyRateNotAllowProducts = async (req, res, next) => {
     }
     const calories = dailyRateCalc(req.body);
     const result = {
-      products: [...notAllowedProducts],
+      code: 200,
       calories,
+      notAllowedProducts: [...notAllowedProducts],
     };
     res.json(result);
     console.log(result);

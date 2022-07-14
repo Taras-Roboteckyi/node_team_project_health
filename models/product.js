@@ -19,7 +19,10 @@ const productSchema = new Schema({
     type: Number,
   },
   groupBloodNotAllowed: {
-    type: Array,
+    1: Boolean,
+    2: Boolean,
+    3: Boolean,
+    4: Boolean,
   },
 });
 
