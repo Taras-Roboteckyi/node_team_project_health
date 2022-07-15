@@ -6,8 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authRouter = require("./routes/api/auth");
-const productsRouter=require('./routes/api/products')
-
+const productsRouter = require("./routes/api/products");
 
 const app = express();
 
@@ -18,8 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRouter);
-app.use('/api/products', productsRouter);
-
+app.use("/api/products", productsRouter);
 
 app.use((req, res, next) => {
   next({ status: 404, message: "Not Found" });

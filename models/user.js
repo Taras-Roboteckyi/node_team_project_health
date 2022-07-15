@@ -31,31 +31,52 @@ const schema = new Schema(
         return v4();
       },
     },
+    inputUserData: {
+      type: Object,
+      default: {
+        height: "0",
+        age: "0",
+        currentWeight: "0",
+        desiredWeight: "0",
+        bloodType: "1",
+        calories: "0",
+      },
+    },
+    notAllowedProducts: {
+      type: Array,
+      default: [],
+    },
   },
   { timestamps: true }
 );
 
 const schemaRegister = Joi.object({
-  name: Joi.string().min(3).required(),
+  name: Joi.string().min(3).max(254).required(),
   email: Joi.string()
+    .min(3)
+    .max(254)
     .email({
       minDomainSegments: 2,
     })
     .required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(8).max(100).required(),
 });
 
 const schemaLogin = Joi.object({
   email: Joi.string()
+    .min(3)
+    .max(254)
     .email({
       minDomainSegments: 2,
     })
     .required(),
-  password: Joi.string().required(),
+  password: Joi.string().min(8).max(100).required(),
 });
 
 const schemaVerify = Joi.object({
   email: Joi.string()
+    .min(3)
+    .max(254)
     .email({
       minDomainSegments: 2,
     })
