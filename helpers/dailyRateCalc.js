@@ -14,7 +14,7 @@ const dailyRateCalc = ({
   return result;
 };
 
-module.exports = dailyRateCalc;
+module.exports = { dailyRateCalc };
 
 // "ФОРМУЛА ДЛЯ РОЗРАХУНКУ ДЕННОЇ НОРМИ КАЛОРІЙ ЖІНКАМ
 // 10 * вага + 6.25 * зріст - 5 * вік - 161 - 10 * (вага - бажана вага)"

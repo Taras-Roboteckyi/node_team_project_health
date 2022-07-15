@@ -1,5 +1,5 @@
 const { Product, inputData } = require("../models/product");
-const dailyRateCalc = require("../helpers/dailyRateCalc");
+const { dailyRateCalc } = require("../helpers/dailyRateCalc");
 const { createError } = require("../helpers/errors");
 
 const dailyRateNotAllowProducts = async (req, res, next) => {
@@ -27,7 +27,6 @@ const dailyRateNotAllowProducts = async (req, res, next) => {
       notAllowedProducts: [...notAllowedProducts],
     };
     res.json(result);
-    console.log(result);
   } catch (error) {
     next(error);
   }

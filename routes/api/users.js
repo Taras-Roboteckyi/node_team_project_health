@@ -1,12 +1,11 @@
 const express = require("express");
 
-const { dailyRate } = require("../../controllers/dailyRate");
+const { userNotAllowedProducts } = require("../../controllers/dailyRatePrivat");
 const router = express.Router();
 // const { schemaVerify } = require("../../models/user");
 // const { validateRequest } = require("../../middlewares/validateRequest");
 const { auth } = require("../../middlewares");
 
-
-router.post("/users/privat", auth, dailyRate);
+router.get("/user/:bloodType", auth, userNotAllowedProducts);
 
 module.exports = router;
