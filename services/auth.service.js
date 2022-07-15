@@ -36,6 +36,8 @@ const loginUser = async ({ email, password }) => {
     token,
     id: user._id,
     name: user.name,
+    userData: user.inputUserData,
+    notAllowedProducts: user.notAllowedProducts,
   };
 };
 
