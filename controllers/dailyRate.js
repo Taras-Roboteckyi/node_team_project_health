@@ -24,7 +24,7 @@ const dailyRateNotAllowProducts = async (req, res, next) => {
     const result = {
       code: 200,
       calories,
-      notAllowedProducts: [...notAllowedProducts],
+      notAllowedProducts,
     };
     res.json(result);
   } catch (error) {

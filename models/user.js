@@ -38,7 +38,7 @@ const schema = new Schema(
         age: "0",
         currentWeight: "0",
         desiredWeight: "0",
-        bloodType: "1",
+        bloodType: "0",
         calories: "0",
       },
     },
