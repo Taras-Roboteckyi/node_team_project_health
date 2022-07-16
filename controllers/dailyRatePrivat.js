@@ -9,7 +9,7 @@ const userNotAllowedProducts = async (req, res, next) => {
     if (error) {
       throw createError(400, error.message);
     }
-    const { bloodType } = req.params;
+    const { bloodType } = req.body;
     const notAllowedProducts = await Product.find(
       { ["groupBloodNotAllowed." + bloodType]: { $eq: true } },
       "-__v ",

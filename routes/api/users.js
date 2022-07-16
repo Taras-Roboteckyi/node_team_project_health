@@ -6,6 +6,6 @@ const router = express.Router();
 // const { validateRequest } = require("../../middlewares/validateRequest");
 const { auth } = require("../../middlewares");
 
-router.post("/user/:bloodType", auth, userNotAllowedProducts);
+router.post("/user/:id", auth, userNotAllowedProducts);
 
 module.exports = router;
