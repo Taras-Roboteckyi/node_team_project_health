@@ -4,8 +4,6 @@ const {
   loginUser,
   logoutUser,
   getUser,
-  confirm,
-  resend,
 } = require("../../controllers/users");
 const router = express.Router();
 const {
@@ -21,7 +19,7 @@ router.post("/login", validateRequest(schemaLogin), loginUser);
 router.post("/logout", auth, logoutUser);
 router.get("/user", auth, getUser);
 
-router.get("/verify/:verificationToken", confirm);
-router.post("/verify", validateRequest(schemaVerify), resend);
+router.get("/verify/:verificationToken");
+router.post("/verify", validateRequest(schemaVerify));
 
 module.exports = router;
