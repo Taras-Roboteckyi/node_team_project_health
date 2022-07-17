@@ -1,5 +1,5 @@
 const {Schema, model}=require('mongoose');
-const Joi=require('joi');
+const Joi=require('joi').extend(require('@joi/date'));
 
 const productSchema = new Schema ({
     _id:{
@@ -33,7 +33,11 @@ const diarySchema = new Schema ({
     user:{
         type:Schema.Types.ObjectId,
         ref:'users'
-    }
+    },
+    productWeight:{
+        type:Number,
+        default:0,
+    },
 });
 
 const addProductSchema= Joi.object({
@@ -47,13 +51,18 @@ const addProductSchema= Joi.object({
 
 const deleteProductSchema=Joi.object({
     productTitle:Joi.string().required(),
-    date:Joi.string().required(),
+    date:Joi.date().format('YYYY-MM-DD').required(),
     // user:Joi.string(),
 });
+
+const getDiaryByDaySchema=Joi.object({
+    date:Joi.date().format('YYYY-MM-DD').required(),
+})
 
 const diarySchemas={
     add:addProductSchema,
     delete:deleteProductSchema,
+    getByDay:getDiaryByDaySchema,
 };
 
 const Diary=model('diary', diarySchema);
