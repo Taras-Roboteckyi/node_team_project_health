@@ -6,7 +6,8 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authRouter = require("./routes/api/auth");
-const productsRouter=require('./routes/api/products')
+const productsRouter=require('./routes/api/products');
+const diaryRouter=require('./routes/api/diary');
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use('/api/products', productsRouter);
+app.use('/api/diary', diaryRouter)
 
 
 app.use((req, res, next) => {
