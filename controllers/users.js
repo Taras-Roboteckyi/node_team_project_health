@@ -59,7 +59,7 @@ const registerUser = async (req, res, next) => {
 const loginUser = async (req, res, next) => {
   try {
     const token = await authService.loginUser(req.body);
-    
+
     res.json({
       code: 200,
       data: token,
@@ -88,14 +88,13 @@ const getUser = async (req, res, next) => {
       email: data.email,
       verify: data.verify,
       verificationToken: data.verificationToken,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
+      userData: data.inputUserData,
+      notAllowedProducts: data.notAllowedProducts,
     });
   } catch (e) {
     next(e);
   }
 };
-
 module.exports = {
   registerUser,
   loginUser,
