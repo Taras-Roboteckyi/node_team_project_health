@@ -227,7 +227,7 @@
     },
 
     "/products/search/{query}": {
-      "post": {
+      "get": {
         "tags": ["Products"],
         "summary": "Search products",
         "parameters": [
