@@ -23,14 +23,14 @@ const userNotAllowedProducts = async (req, res, next) => {
       ...req.body,
       calories,
     };
-    // console.log(inputUserData);
+
     const { _id } = req.user;
     const user = await User.findByIdAndUpdate(
       _id,
       { inputUserData, notAllowedProducts },
       { new: true }
     );
-    // console.log(user);
+
     if (!user) {
       createError(404, "Not found");
     }

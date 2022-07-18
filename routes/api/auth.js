@@ -9,7 +9,7 @@ const router = express.Router();
 const {
   schemaRegister,
   schemaLogin,
-  schemaVerify,
+  // schemaVerify,
 } = require("../../models/user");
 const { validateRequest } = require("../../middlewares/validateRequest");
 const { auth } = require("../../middlewares");
@@ -19,7 +19,7 @@ router.post("/login", validateRequest(schemaLogin), loginUser);
 router.post("/logout", auth, logoutUser);
 router.get("/user", auth, getUser);
 
-router.get("/verify/:verificationToken");
-router.post("/verify", validateRequest(schemaVerify));
+// router.get("/verify/:verificationToken");
+// router.post("/verify", validateRequest(schemaVerify));
 
 module.exports = router;
