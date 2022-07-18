@@ -325,24 +325,14 @@
           }
         ],
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Login's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserDateRequest"
-              }
-            }
-          }
-        },
+
         "responses": {
           "201": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/UserDateResponse"
                 }
               }
             }
@@ -551,7 +541,7 @@
     },
     "securitySchemes": {
       "Bearer": {
-        "type": "https",
+        "type": "http",
         "scheme": "bearer",
         "bearerFormat": "JWT"
       }
