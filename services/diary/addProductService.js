@@ -10,9 +10,6 @@ const addProduct = async(user, body)=>{
         throw createError(400,'Date must be current');
     }
 
-    const productDiary = await Diary.findOne({user,date,productTitle});
-
-    if(!productDiary){
         const productCalories= await countCalories(productTitle,productWeight);
 
         const newProductDiary = new Diary({
@@ -26,8 +23,10 @@ const addProduct = async(user, body)=>{
         await newProductDiary.save();
 
         return newProductDiary;
-    }
+
+    
 };
+
 
 const isCurrentDate=date=>{
     const inputDay=new Date(date).setHours(0,0,0,0,);
