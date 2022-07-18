@@ -1,7 +1,4 @@
 const { User } = require("../models/user");
-
-// const { createError } = require("../helpers/errors");
-
 const updateUser = async (id, data) => {
   return User.findByIdAndUpdate(id, data, { new: true });
 };

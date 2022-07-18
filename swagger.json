@@ -109,6 +109,7 @@
         }
       }
     },
+
     "/auth/logout": {
       "post": {
         "tags": ["Auth"],
@@ -144,6 +145,7 @@
         }
       }
     },
+
     "/auth/user": {
       "get": {
         "tags": ["Auth"],
@@ -184,7 +186,15 @@
       "post": {
         "tags": ["Products"],
         "summary": "Public user data",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "bloodType",
+            "in": "path",
+            "type": "string",
+            "description": "User blood type",
+            "required": true
+          }
+        ],
 
         "requestBody": {
           "description": "Input user data object",
@@ -198,7 +208,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
@@ -211,38 +221,32 @@
           "400": {
             "description": "Bad request",
             "content": {}
-          },
-          "401": {
-            "description": "Login or password is wrong",
-            "content": {}
           }
         }
       }
     },
+
     "/products/search/{query}": {
       "post": {
         "tags": ["Products"],
         "summary": "Search products",
-        "parameters": [],
-
-        "requestBody": {
-          "description": "Login's object",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              }
-            }
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "type": "string",
+            "description": "Products name",
+            "required": true
           }
-        },
+        ],
+
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/SearchProductsResponse"
                 }
               }
             }
@@ -251,37 +255,46 @@
             "description": "Bad request",
             "content": {}
           },
-          "401": {
-            "description": "Login or password is wrong",
+          "404": {
+            "description": "Product not found",
             "content": {}
           }
         }
       }
     },
+
     "/users/user/{id}": {
       "post": {
         "tags": ["Users"],
-        "summary": "User login",
-        "parameters": [],
+        "summary": "Get registered user data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "User Id",
+            "required": true
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Login's object",
+          "description": "Input user data object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/GetRegisteredUserDataRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/GetRegisteredUserDataResponse"
                 }
               }
             }
@@ -290,18 +303,27 @@
             "description": "Bad request",
             "content": {}
           },
-          "401": {
-            "description": "Login or password is wrong",
+          "404": {
+            "description": "Not authorized",
             "content": {}
           }
         }
       }
     },
+
     "/diary/{date}": {
       "get": {
         "tags": ["Diary"],
-        "summary": "User login",
-        "parameters": [],
+        "summary": "Get user date",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "type": "string",
+            "description": "Date",
+            "required": true
+          }
+        ],
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Login's object",
@@ -309,7 +331,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/UserDateRequest"
               }
             }
           }
@@ -336,19 +358,20 @@
         }
       }
     },
+
     "/diary/add": {
       "post": {
         "tags": ["Diary"],
-        "summary": "User login",
+        "summary": "Add user data to diary",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Login's object",
+          "description": "User data object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/AddUserDataDiaryRequest"
               }
             }
           }
@@ -359,7 +382,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/AddUserDataDiaryResponse"
                 }
               }
             }
@@ -369,7 +392,7 @@
             "content": {}
           },
           "401": {
-            "description": "Login or password is wrong",
+            "description": "Not authorized",
             "content": {}
           }
         }
@@ -378,37 +401,37 @@
     "/diary/remove": {
       "delete": {
         "tags": ["Diary"],
-        "summary": "User login",
+        "summary": "Delete user data from diary",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
-          "description": "Login's object",
+          "description": "User data object",
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/DeleteUserDataFromDiaryRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/DeleteUserDataFromDiaryResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request",
+            "description": "Date must be current",
             "content": {}
           },
           "401": {
-            "description": "Login or password is wrong",
+            "description": "Not authorized",
             "content": {}
           }
         }
