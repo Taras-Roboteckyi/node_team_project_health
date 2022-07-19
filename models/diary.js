@@ -31,9 +31,10 @@ const diarySchema = new Schema(
       type: Number,
       default: 0,
     },
+
     user: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
     },
     productWeight: {
       type: Number,
