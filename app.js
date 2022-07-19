@@ -1,13 +1,16 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
 
-const dotenv = require("dotenv"); /* загружаєм змінні окружения из файла .env в process.env */
+const dotenv = require("dotenv");
 dotenv.config();
 
-/* const usersRouter = require("./routes/api/users");
-const usersCurrentRouter = require("./routes/api/currentUsers");
-const contactsRouter = require("./routes/api/contacts"); */
+const authRouter = require("./routes/api/auth");
+const productsRouter = require("./routes/api/products");
+const diaryRouter = require("./routes/api/diary");
+const usersRauter = require("./routes/api/users");
 
 const app = express();
 
@@ -16,19 +19,21 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-/* app.use(express.static("public")); // Дозволяєм експресу роздавати статичні файли з папки public */
 
-/* app.use("/api/users", usersRouter);
-app.use("/api/users", usersCurrentRouter);
-app.use("/api/contacts", contactsRouter);
+app.use("/api/auth", authRouter);
+app.use("/api/products", productsRouter);
+app.use("/api/diary", diaryRouter);
+app.use("/api/users", usersRauter);
 
-app.use((req, res) => {
-  res.status(404).json({ message: "Not found" });
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use((req, res, next) => {
+  next({ status: 404, message: "Not Found" });
 });
 
 app.use((err, req, res, next) => {
-  const { status = 500, message = "Server error" } = err;
-  res.status(status).json({ message: message });
-}); */
+  const { status = 500, message = "Internal Server Error" } = err;
+  res.status(status).json({ message });
+});
 
 module.exports = app;
