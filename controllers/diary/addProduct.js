@@ -1,4 +1,4 @@
-const {Diary}=require('../../models/diary');
+// const {Diary}=require('../../models/diary');
 const {addProduct}=require('../../services/diary/addProductService');
 
 
