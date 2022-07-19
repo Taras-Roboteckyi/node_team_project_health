@@ -1,0 +1,960 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "2.0.2",
+    "title": "Health_SlimMoms",
+    "description": "Showing off swagger-ui-express",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [
+    {
+      "url": "https://health-projectbackend.herokuapp.com/api",
+      "urllocal": "http://localhost:4600/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    },
+    {
+      "name": "Products",
+      "description": "Products endpoints"
+    },
+    {
+      "name": "Users",
+      "description": "Users endpoints"
+    },
+    {
+      "name": "Diary",
+      "description": "Diary endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User registration",
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "409": {
+            "description": "Email in use",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User login",
+        "parameters": [],
+
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Login or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "description": "JWT token is required",
+
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/auth/user": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get user info",
+        "parameters": [],
+        "description": "JWT token is required",
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserInfoResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/products/public/{bloodType}": {
+      "post": {
+        "tags": ["Products"],
+        "summary": "Public user data",
+        "parameters": [
+          {
+            "name": "bloodType",
+            "in": "path",
+            "type": "string",
+            "description": "User blood type",
+            "required": true
+          }
+        ],
+
+        "requestBody": {
+          "description": "Input user data object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotAllowedProductsPublicRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotAllowedProductsPublicResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/products/search/{query}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Search products",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "path",
+            "type": "string",
+            "description": "Products name",
+            "required": true
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchProductsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "404": {
+            "description": "Product not found",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/users/user/{id}": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Get registered user data",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "type": "string",
+            "description": "User Id",
+            "required": true
+          }
+        ],
+        "description": "JWT token is required",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Input user data object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetRegisteredUserDataRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRegisteredUserDataResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "404": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/diary/{date}": {
+      "get": {
+        "tags": ["Diary"],
+        "summary": "Get user date",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "type": "string",
+            "description": "Date",
+            "required": true
+          }
+        ],
+        "description": "JWT token is required",
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserByDateResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Login or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/diary/add": {
+      "post": {
+        "tags": ["Diary"],
+        "summary": "Add user data to diary",
+        "parameters": [],
+        "description": "JWT token is required",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User data object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiaryAddProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiaryAddProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/diary/remove": {
+      "delete": {
+        "tags": ["Diary"],
+        "summary": "Delete user data from diary",
+        "parameters": [],
+        "description": "JWT token is required",
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "User data object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DiaryDeleteProductRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DiaryDeleteProductResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Date must be current",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "UserName"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User's id",
+              "example": "62d524d8b27f9cb72eca52f9"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "UserName"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            }
+          }
+        },
+        "example": {
+          "code": 201,
+          "user": {
+            "id": "62d524d8b27f9cb72eca52f9",
+            "name": "UserName",
+            "email": "test@gmail.com"
+          }
+        }
+      },
+
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User's id",
+              "example": "62d524d8b27f9cb72eca52f9"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "UserName"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            }
+          }
+        },
+        "example": {
+          "code": 200,
+          "data": {
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyY2FkMjJiZjAwZmZiNTk1NDZhMzY2NyIsImlhdCI6MTY1ODEzNzkwOSwiZXhwIjoxNjU4MjI0MzA5fQ.b2JGT59T9jsx0_MygjXnPkrBlk6FMWkfEDVzhrPfk9M",
+            "id": "62cad22bf00ffb59546a3667",
+            "name": "Test1",
+            "userData": {
+              "height": "0",
+              "age": "0",
+              "currentWeight": "0",
+              "desiredWeight": "0",
+              "bloodType": "0",
+              "calories": "0"
+            },
+            "notAllowedProducts": []
+          }
+        }
+      },
+
+      "GetUserInfoRequest": {
+        "properties": {}
+      },
+      "GetUserInfoResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User's id",
+              "example": "62d524d8b27f9cb72eca52f9"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "UserName"
+            },
+            "email": {
+              "type": "email",
+              "description": "User's email"
+            },
+            "userData": {
+              "type": "object",
+              "description": "User's data"
+            },
+            "notAllowedProducts": {
+              "type": "array",
+              "description": "User's not allowed products",
+              "example": "62d524d8b27f9cb72eca52f9"
+            }
+          }
+        },
+        "example": {
+          "id": "62d545c2b8fd4f752293f8a8",
+          "name": "UserName",
+          "email": "test@gmail.com",
+          "userData": {
+            "height": "0",
+            "age": "0",
+            "currentWeight": "0",
+            "desiredWeight": "0",
+            "bloodType": "0",
+            "calories": "0"
+          },
+          "notAllowedProducts": []
+        }
+      },
+
+      "NotAllowedProductsPublicRequest": {
+        "type": "object",
+        "required": [
+          {
+            "height": "175",
+            "age": "30",
+            "currentWeight": "80",
+            "desiredWeight": "75",
+            "bloodType": "1"
+          }
+        ],
+        "properties": {
+          "height": {
+            "type": "number",
+            "description": "User's height",
+            "example": "175"
+          },
+          "age": {
+            "type": "number",
+            "description": "User's age",
+            "example": "30"
+          },
+          "currentWeight": {
+            "type": "number",
+            "description": "User's currentWeight",
+            "example": "80"
+          },
+          "desiredWeight": {
+            "type": "number",
+            "description": "User's desiredWeight",
+            "example": "75"
+          },
+          "bloodType": {
+            "type": "number",
+            "description": "User's bloodType",
+            "example": "1"
+          }
+        }
+      },
+      "NotAllowedProductsPublicResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "groupBloodNotAllowed": {
+              "type": "array",
+              "description": "Blood type user has",
+              "example": "[null, false, false, true, false]"
+            },
+            "_id": {
+              "type": "string",
+              "description": "Product id",
+              "example": "5d51694902b2373622ff5c4c"
+            },
+            "categories": {
+              "type": "array",
+              "description": "Products categories",
+              "format": "[масла и жиры]"
+            },
+            "weight": {
+              "type": "number",
+              "description": "Products weight (gramm)",
+              "example": "[масла и жиры]"
+            },
+            "title": {
+              "type": "object",
+              "description": "Products title"
+            },
+            "calories": {
+              "type": "number",
+              "description": "Products calories in 100g",
+              "example": "899"
+            }
+          }
+        },
+        "example": {
+          "code": 200,
+          "calories": 1462,
+          "notAllowedProducts": [
+            {
+              "groupBloodNotAllowed": [null, false, false, true, false],
+              "_id": "5d51694902b2373622ff5c4c",
+              "categories": ["масла и жиры"],
+              "weight": 100,
+              "title": {
+                "ru": "Масло арахисовое",
+                "ua": "Олія арахісове"
+              },
+              "calories": 899
+            }
+          ]
+        }
+      },
+
+      "SearchProductsRequest": {
+        "properties": {}
+      },
+      "SearchProductsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "Object": {},
+            "Object2": {}
+          }
+        },
+        "example": [
+          {
+            "groupBloodNotAllowed": [null, false, false, false, false],
+            "_id": "5d51694902b2373622ff5ef5",
+            "categories": ["безалкогольные напитки"],
+            "weight": 100,
+            "title": {
+              "ru": "Кофе Maxwell House гранулированный сухой",
+              "ua": "Кава Maxwell House гранульований сухий"
+            },
+            "calories": 100,
+            "__v": 0
+          },
+          {
+            "groupBloodNotAllowed": [null, false, false, false, false],
+            "_id": "5d51694902b2373622ff5ef6",
+            "categories": ["безалкогольные напитки"],
+            "weight": 100,
+            "title": {
+              "ru": "Кофе Maxwell House растворимый сухой",
+              "ua": "Кава Maxwell House розчинна суха"
+            },
+            "calories": 100,
+            "__v": 0
+          }
+        ]
+      },
+
+      "GetRegisteredUserDataRequest": {
+        "type": "object",
+        "required": [
+          {
+            "height": "175",
+            "age": "30",
+            "currentWeight": "80",
+            "desiredWeight": "75",
+            "bloodType": "1"
+          }
+        ],
+        "properties": {
+          "height": {
+            "type": "number",
+            "description": "User's height",
+            "example": "175"
+          },
+          "age": {
+            "type": "number",
+            "description": "User's age",
+            "example": "30"
+          },
+          "currentWeight": {
+            "type": "number",
+            "description": "User's currentWeight",
+            "example": "80"
+          },
+          "desiredWeight": {
+            "type": "number",
+            "description": "User's desiredWeight",
+            "example": "75"
+          },
+          "bloodType": {
+            "type": "number",
+            "description": "User's bloodType",
+            "example": "1"
+          }
+        }
+      },
+      "GetRegisteredUserDataResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "groupBloodNotAllowed": {
+              "type": "array",
+              "description": "Blood type user has",
+              "example": "[null, false, false, true, false]"
+            },
+            "_id": {
+              "type": "string",
+              "description": "Product id",
+              "example": "5d51694902b2373622ff5c4c"
+            },
+            "categories": {
+              "type": "array",
+              "description": "Products categories",
+              "format": "[масла и жиры]"
+            },
+            "weight": {
+              "type": "number",
+              "description": "Products weight (gramm)",
+              "example": "[масла и жиры]"
+            },
+            "title": {
+              "type": "object",
+              "description": "Products title"
+            },
+            "calories": {
+              "type": "number",
+              "description": "Products calories in 100g",
+              "example": "899"
+            }
+          }
+        },
+        "example": {
+          "code": 200,
+          "calories": 1462,
+          "notAllowedProducts": [
+            {
+              "groupBloodNotAllowed": [null, false, false, true, false],
+              "_id": "5d51694902b2373622ff5c4c",
+              "categories": ["масла и жиры"],
+              "weight": 100,
+              "title": {
+                "ru": "Масло арахисовое",
+                "ua": "Олія арахісове"
+              },
+              "calories": 899
+            }
+          ]
+        }
+      },
+
+      "UserByDateRequest": {
+        "properties": {}
+      },
+      "UserByDateResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "sumCalories": [],
+            "data": []
+          }
+        },
+        "example": {
+          "status": "success",
+          "code": 200,
+          "message": "diary by date",
+          "sumCalories": [
+            {
+              "_id": {
+                "user": "62cd924b57f4033e40d30e15",
+                "date": "2022-07-17T13:20:20.278Z"
+              },
+              "sum": 1398
+            },
+
+            {
+              "_id": {
+                "user": "62cd924b57f4033e40d30e15",
+                "date": "2022-07-17T13:45:08.784Z"
+              },
+              "sum": 174
+            }
+          ],
+          "data": [
+            {
+              "_id": "62d55f66ec6401c0d30b20e7",
+              "productTitle": "Гречана каша з крупи ядриця",
+              "date": "2022-07-18",
+              "productCalories": 202,
+              "user": "62d3056dc2e89dcfafc7ef84",
+              "productWeight": 200
+            },
+            {
+              "_id": "62d55fc0d4a267aae14726b5",
+              "productTitle": "Гречана каша з крупи ядриця",
+              "date": "2022-07-18",
+              "productCalories": 202,
+              "user": "62d3056dc2e89dcfafc7ef84",
+              "productWeight": 200
+            },
+            {
+              "_id": "62d59cdbc9e3cabb9af4b522",
+              "productTitle": "Омлет із сиром",
+              "date": "2022-07-18",
+              "productCalories": 684,
+              "user": "62d3056dc2e89dcfafc7ef84",
+              "productWeight": 200,
+              "createdAt": "2022-07-18T17:48:11.326Z",
+              "updatedAt": "2022-07-18T17:48:11.326Z"
+            }
+          ]
+        }
+      },
+
+      "DiaryAddProductRequest": {
+        "type": "object",
+        "required": ["date", "productTitle", "productWeight"],
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "Date",
+            "example": "2022-07-19"
+          },
+          "productTitle": {
+            "type": "string",
+            "description": "Product title",
+            "example": "Омлет із сиром"
+          },
+          "productWeight": {
+            "type": "number",
+            "description": "Products weight",
+            "example": "100"
+          }
+        }
+      },
+      "DiaryAddProductResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "description": "Products and calories that the User ate on the current day"
+            }
+          }
+        },
+        "example": {
+          "data": {
+            "_id": "62d70db9825cd7c65e339613",
+            "date": "2022-07-19",
+            "user": "62d3056dc2e89dcfafc7ef84",
+            "productWeight": 200,
+            "productTitle": "Омлет із сиром",
+            "productCalories": 684
+          }
+        }
+      },
+
+      "DiaryDeleteProductRequest": {
+        "type": "object",
+        "required": ["date", "productTitle"],
+        "properties": {
+          "date": {
+            "type": "date",
+            "description": "Date",
+            "example": "2022-07-19"
+          },
+          "productTitle": {
+            "type": "string",
+            "description": "Product title",
+            "example": "Омлет із сиром"
+          }
+        }
+      },
+      "DiaryDeleteProductResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "response": {
+              "description": "Delete product from diary"
+            }
+          }
+        },
+        "example": {
+          "status": "success",
+          "code": 200,
+          "message": "product deleted"
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
