@@ -27,11 +27,11 @@ const productSchema = new Schema({
 });
 
 const inputData = Joi.object({
-  height: Joi.string().required(),
-  age: Joi.string().required(),
-  currentWeight: Joi.string().required(),
-  desiredWeight: Joi.string().required(),
-  bloodType: Joi.string().required(),
+  height: Joi.number().required(),
+  age: Joi.number().required(),
+  currentWeight: Joi.number().required(),
+  desiredWeight: Joi.number().required(),
+  bloodType: Joi.number().required(),
 });
 
 const Product = model("Product", productSchema);

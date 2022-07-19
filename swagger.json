@@ -116,68 +116,50 @@
         "summary": "User logout",
         "parameters": [],
         "security": [{ "Bearer": [] }],
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/LogoutRequest"
-            }
+        "description": "JWT token is required",
+
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
           }
-        }
-      },
-      "responses": {
-        "204": {
-          "description": "Successful operation",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LogoutResponse"
-              }
-            }
-          }
-        },
-        "400": {
-          "description": "Bad request",
-          "content": {}
-        },
-        "401": {
-          "description": "Not authorized",
-          "content": {}
         }
       }
     },
-
     "/auth/user": {
       "get": {
         "tags": ["Auth"],
         "summary": "Get user info",
         "parameters": [],
+        "description": "JWT token is required",
         "security": [{ "Bearer": [] }],
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/UserRequest"
-            }
-          }
-        }
-      },
-      "responses": {
-        "200": {
-          "description": "Successful operation",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UserResponse"
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserInfoResponse"
+                }
               }
             }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
           }
-        },
-        "400": {
-          "description": "Bad request",
-          "content": {}
-        },
-        "401": {
-          "description": "Login or password is wrong",
-          "content": {}
         }
       }
     },
@@ -202,7 +184,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/InputUserDataRequest"
+                "$ref": "#/components/schemas/NotAllowedProductsPublicRequest"
               }
             }
           }
@@ -213,7 +195,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/InputUserDataResponse"
+                  "$ref": "#/components/schemas/NotAllowedProductsPublicResponse"
                 }
               }
             }
@@ -482,6 +464,7 @@
           }
         }
       },
+
       "LoginRequest": {
         "type": "object",
         "required": ["email", "password"],
@@ -536,6 +519,133 @@
             },
             "notAllowedProducts": []
           }
+        }
+      },
+
+      "GetUserInfoRequest": {
+        "properties": {}
+      },
+      "GetUserInfoResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User's id",
+              "example": "62d524d8b27f9cb72eca52f9"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "UserName"
+            },
+            "email": {
+              "type": "email",
+              "description": "User's email"
+            },
+            "userData": {
+              "type": "object",
+              "description": "User's data"
+            },
+            "notAllowedProducts": {
+              "type": "array",
+              "description": "User's not allowed products",
+              "example": "62d524d8b27f9cb72eca52f9"
+            }
+          }
+        },
+        "example": {
+          "id": "62d545c2b8fd4f752293f8a8",
+          "name": "UserName",
+          "email": "test@gmail.com",
+          "userData": {
+            "height": "0",
+            "age": "0",
+            "currentWeight": "0",
+            "desiredWeight": "0",
+            "bloodType": "0",
+            "calories": "0"
+          },
+          "notAllowedProducts": []
+        }
+      },
+
+      "NotAllowedProductsPublicRequest": {
+        "type": "object",
+        "required": {
+          "height": "175",
+          "age": "30",
+          "currentWeight": "80",
+          "desiredWeight": "75",
+          "bloodType": "1"
+        },
+        "properties": {
+          "height": {
+            "type": "number",
+            "description": "User's height",
+            "example": "175"
+          },
+          "age": {
+            "type": "number",
+            "description": "User's age",
+            "format": "30"
+          },
+          "currentWeight": {
+            "type": "number",
+            "description": "User's currentWeight",
+            "example": "80"
+          },
+          "desiredWeight": {
+            "type": "number",
+            "description": "User's desiredWeight",
+            "example": "75"
+          },
+          "bloodType": {
+            "type": "number",
+            "description": "User's bloodType",
+            "example": "1"
+          }
+        }
+      },
+      "NotAllowedProductsPublicResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "string",
+              "description": "User's id",
+              "example": "62d524d8b27f9cb72eca52f9"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "UserName"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            }
+          }
+        },
+        "example": {
+          "code": 200,
+          "calories": 1462,
+          "notAllowedProducts": [
+            {
+              "groupBloodNotAllowed": [null, false, false, true, false],
+              "_id": "5d51694902b2373622ff5c4c",
+              "categories": ["масла и жиры"],
+              "weight": 100,
+              "title": {
+                "ru": "Масло арахисовое",
+                "ua": "Олія арахісове"
+              },
+              "calories": 899
+            }
+          ]
         }
       }
     },
