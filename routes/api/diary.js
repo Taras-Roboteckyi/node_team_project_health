@@ -10,8 +10,11 @@ const {getDiaryDataCtrl}=require('../../controllers/diary/getDiaryData');
 
 
 
+
 router.post('/add',auth,validateRequest(diarySchemas.add), addProductCtrl);
 router.delete('/remove', auth, validateRequest(diarySchemas.delete), deleteProductCtrl);
 router.get('/:date', auth ,  getDiaryDataCtrl);
+// router.get('/getKcal',auth, getCaloriesByDay);
+
 
 module.exports=router;

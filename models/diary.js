@@ -38,6 +38,7 @@ const diarySchema = new Schema ({
         type:Number,
         default:0,
     },
+    
 });
 
 const addProductSchema= Joi.object({
