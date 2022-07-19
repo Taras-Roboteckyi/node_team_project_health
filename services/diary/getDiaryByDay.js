@@ -9,13 +9,14 @@ const getDiaryByDay= async(user,{date})=>{
     }
 
 
-    const diaryByDay= await Diary.find({user,date}).select({__v:0}).populate("user",'inputUserData.calories');;
+    const diaryByDay= await Diary.find({user,date}).select({__v:0}).populate("user",'inputUserData.calories');
 
     return diaryByDay;
 
 
-
 }
+
+
 const isFutureDate = date => {
     const inputDay = new Date(date).setHours(0,0,0,0);
 
@@ -23,5 +24,8 @@ const isFutureDate = date => {
   
     return inputDay > today;
   }
+
+
+
 
   module.exports={getDiaryByDay};

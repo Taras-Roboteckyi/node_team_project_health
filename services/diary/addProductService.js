@@ -12,6 +12,7 @@ const addProduct = async(user, body)=>{
 
         const productCalories= await countCalories(productTitle,productWeight);
 
+
         const newProductDiary = new Diary({
             date,
             user,

@@ -40,9 +40,21 @@ const diarySchema = new Schema(
       type: Number,
       default: 0,
     },
+
+    
+});
+
+const addProductSchema= Joi.object({
+    // date: Joi.string().required(),
+    productTitle:Joi.string().required(),
+    // title: Joi.string(),
+    productWeight: Joi.number().required(),
+    date: Joi.date().required(),
+
   },
   { timestamps: true }
 );
+
 
 const addProductSchema = Joi.object({
   // date: Joi.string().required(),
