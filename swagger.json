@@ -11,7 +11,12 @@
   },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:4600/api" }],
+  "servers": [
+    {
+      "url": "https://health-projectbackend.herokuapp.com/api",
+      "urllocal": "http://localhost:4600/api"
+    }
+  ],
   "tags": [
     {
       "name": "Auth",
