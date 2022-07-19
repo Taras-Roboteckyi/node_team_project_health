@@ -1,6 +1,6 @@
 const { getDiaryByDay } = require("../../services/diary/getDiaryByDay");
 const { Diary } = require("../../models/diary");
-const { date } = require("joi");
+// const { date } = require("joi");
 
 const getDiaryDataCtrl = async (req, res, next) => {
   try {
@@ -18,7 +18,6 @@ const getDiaryDataCtrl = async (req, res, next) => {
       },
     ]);
     const data = await getDiaryByDay(req.user._id, req.params);
-
 
     return res.json({
       status: "success",
