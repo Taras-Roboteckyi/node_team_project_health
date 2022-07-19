@@ -1,5 +1,4 @@
 const {Diary}=require('../../models/diary');
-const {createError}=require('../../helpers/errors');
 const {addProduct}=require('../../services/diary/addProductService');
 
 
@@ -17,7 +16,7 @@ const addProductCtrl= async(req,res,next)=>{
     next(err)
 }
 
-}
+};
 
 
 module.exports={addProductCtrl}

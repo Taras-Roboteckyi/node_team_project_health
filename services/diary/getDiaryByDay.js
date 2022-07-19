@@ -1,5 +1,6 @@
 const {Diary}=require('../../models/diary');
 const {createError}=require('../../helpers/errors');
+const {User}=require('../../models/user')
 
 
 const getDiaryByDay= async(user,{date})=>{
@@ -7,9 +8,12 @@ const getDiaryByDay= async(user,{date})=>{
         throw createError(404,'Wrong date');
     }
 
-    const diaryByDay= await Diary.find({user,date}).select({__v:0});
+
+    const diaryByDay= await Diary.find({user,date}).select({__v:0}).populate("user",'inputUserData.calories');;
 
     return diaryByDay;
+
+
 
 }
 const isFutureDate = date => {
@@ -17,7 +21,7 @@ const isFutureDate = date => {
 
     const today = new Date().setHours(0,0,0,0);
   
-    return inputDay > today
+    return inputDay > today;
   }
 
   module.exports={getDiaryByDay};
