@@ -1,20 +1,28 @@
-// const {Diary}=require('../../models/diary');
-// const {createError}=require('../../helpers/errors');
-const { deleteProduct } = require("../../services/diary/deleteProductService");
+const {findProductByDateUser } = require("../../services/diary");
+const { updateInfo } = require("../../services/diary");
+const { createError } = require("../../helpers/errors");
 
-const deleteProductCtrl = async (req, res, next) => {
-  try {
-    await deleteProduct(req.user._id, req.body);
-    return res.json({
-      status: "success",
-      code: 200,
-      message: "product deleted",
-    });
-  } catch (err) {
-    next(err);
+const deleteProduct = async (req, res) => {
+  const { _id: userId } = req.user;
+  const { productId, date } = req.query;
+
+  const selectedDate = await findProductByDateUser(date, userId);
+  const { _id: dateId, consumedProducts, total: summary } = selectedDate;
+  const product = consumedProducts.find((product) => product._id === productId);
+
+  if (!selectedDate || !product) {
+    throw createError(404, "Product not found");
   }
+
+  const total = summary - product.kcal;
+  await updateInfo(dateId, productId, total);
+
+  res.json({
+    message: "Product was deleted",
+    status: "success",
+    code: 200,
+    data: product,
+  });
 };
 
-module.exports = {
-  deleteProductCtrl,
-};
+module.exports = {deleteProduct};
